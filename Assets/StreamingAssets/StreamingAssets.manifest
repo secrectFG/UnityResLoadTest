@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 908731524
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: test.ab
+      Dependencies: {}
+    Info_1:
+      Name: splits.ab
+      Dependencies: {}
