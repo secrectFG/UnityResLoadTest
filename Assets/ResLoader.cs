@@ -199,4 +199,43 @@ public class ResLoader : MonoBehaviour
         var cost = stopWatch.ElapsedMilliseconds / 1000f;
         Log("load scene split cost "+cost.ToString()+"s");
     }
+
+    public void LoadTextureAsync(){
+        StartCoroutine(_LoadTextureAsync());
+    }
+
+    IEnumerator _LoadTextureAsync(){
+        var stopWatch = Stopwatch.StartNew();
+
+        //遍历文件夹
+        var streamingAssetsPath = Application.streamingAssetsPath + "/images";
+        var files = System.IO.Directory.GetFiles(streamingAssetsPath, "*.jpg");
+        var GridLayout = GameObject.Find("GridLayout");
+        foreach(var file in files){
+            var stopWatch2 = Stopwatch.StartNew();
+            var request = UnityWebRequestTexture.GetTexture($"file://{file}");
+            request.SendWebRequest();
+            while(!request.isDone){
+                yield return null;
+            }
+            print($"cost 1 {stopWatch2.ElapsedMilliseconds / 1000f}s");
+            stopWatch2.Restart();
+            var texture = DownloadHandlerTexture.GetContent(request);
+            
+            print($"cost 2 {stopWatch2.ElapsedMilliseconds / 1000f}s");
+            stopWatch2.Restart();
+            var sprite = Sprite.Create(texture, new Rect(0,0,texture.width,texture.height), Vector2.zero);
+            
+            print($"cost 3 {stopWatch2.ElapsedMilliseconds / 1000f}s");
+            stopWatch2.Restart();
+            var obj = new GameObject();
+            obj.AddComponent<Image>().sprite = sprite;
+            obj.transform.SetParent(GridLayout.transform);
+            onProgress.Invoke(1f/files.Length);
+            print($"cost 4 {stopWatch2.ElapsedMilliseconds / 1000f}s");
+        }
+        onProgress.Invoke(1);
+        var cost = stopWatch.ElapsedMilliseconds / 1000f;
+        Log("load texture cost "+cost.ToString()+"s");
+    }
 }
