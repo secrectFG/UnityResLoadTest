@@ -26,6 +26,9 @@ public class ResLoader : MonoBehaviour
         canvasTransform = GameObject.Find("Canvas").transform;
         if (showButton) ShowShowButton(false);
         logText = GameObject.Find("Log").GetComponent<Text>();
+        //去掉帧数限制
+        Application.targetFrameRate = -1;
+        QualitySettings.vSyncCount = 0;
     }
 
     void Log(string msg)
@@ -167,6 +170,10 @@ public class ResLoader : MonoBehaviour
         {
             print("load test done");
         }));
+    }
+
+    public void UnLoadScene(string sceneName){
+        SceneManager.UnloadSceneAsync(sceneName);
     }
 
     //假进度条加载

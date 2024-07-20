@@ -9,6 +9,7 @@ using System.Diagnostics;
 public class GameManager : MonoBehaviour
 {
     public string url = "http://localhost:5000/stop_timer"; // Python服务器的URL
+    public bool sendPost = true; // 是否发送POST请求
     private static readonly HttpClient client = new HttpClient();
 
     private void Awake() {
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //告诉python启动完成了
-        client.PostAsync(url, null).Wait();
+        if(sendPost)client.PostAsync(url, null).Wait();
         //加载main场景
         
         // SceneManager.LoadScene("Main");
