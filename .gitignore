@@ -51,3 +51,4 @@
 *.csproj
 /Assets/StreamingAssets/splits.ab
 /Assets/StreamingAssets/test.ab
+/Assets/StreamingAssets
