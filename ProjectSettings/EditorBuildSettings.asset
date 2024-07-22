@@ -5,10 +5,43 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: "Assets/Scenes/\u52A0\u8F7D\u6F14\u793A.unity"
+    guid: a19f9313a0a56264ea5874b180981ec9
+  - enabled: 0
+    path: "Assets/Scenes/\u5F15\u7528Resources\u4E2D\u7684\u4E00\u4E2A\u5C0F\u8D44\u6E90.unity"
+    guid: 2b8ba1854132748429cefe0fc61b3c52
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: "Assets/Scenes/AB\u52A0\u8F7D.unity"
+    guid: dcc6c98c7a17a344699001d605b9c6bd
+  - enabled: 0
+    path: "Assets/Scenes/\u65E0\u52A0\u8F7D.unity"
+    guid: f385bbf2f0ed1e043b9d4d2f14e8d15a
+  - enabled: 0
+    path: "Assets/Scenes/\u65E0\u7F1D\u52A0\u8F7D\u6D4B\u8BD5.unity"
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/test.unity
     guid: baee8ced535dfbf43a00ff7e80727d67
+  - enabled: 0
+    path: Assets/Scenes/test2.unity
+    guid: f578dfc4d82ea5a4b96e1987a7404f72
+  - enabled: 0
+    path: "Assets/Scenes/\u591A\u4E2A\u5B9E\u4F8B\u7684\u573A\u666F.unity"
+    guid: ea4838aaf68bd314c95baad6b5c41746
+  - enabled: 0
+    path: "Assets/Scenes/\u591A\u4E2A\u5B9E\u4F8B\u7684\u573A\u666F2.unity"
+    guid: bcabec6cbd4148f4ebff25a13f6875e8
+  - enabled: 0
+    path: "Assets/Scenes/\u591A\u4E2A\u5B9E\u4F8B\u9010\u4E2A\u52A0\u8F7D.unity"
+    guid: fb36e6f682dc21f459f4155c865dc70f
+  - enabled: 0
+    path: "Assets/Scenes/\u591A\u4E2A\u5B9E\u4F8B\u9010\u4E2A\u8FDB\u5EA6\u6761\u4F18\u5316.unity"
+    guid: 8b950abf2268ef24984ba5f57d1e48d2
+  - enabled: 0
+    path: "Assets/Scenes/\u975E\u5EF6\u8FDF\u52A0\u8F7D.unity"
+    guid: f8fc713b35eb88543a9e0689423e7937
+  - enabled: 0
+    path: "Assets/Scenes/\u5EF6\u8FDF\u52A0\u8F7D.unity"
+    guid: 72eb18dcda6c9ad439ac00af58bb4d2e
   m_configObjects: {}
