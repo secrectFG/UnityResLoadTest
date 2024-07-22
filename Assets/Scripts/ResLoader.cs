@@ -58,11 +58,6 @@ public class ResLoader : MonoBehaviour
         }));
     }
 
-    public void OnLoad(string funcname)
-    {
-        Invoke(funcname, 0);
-    }
-
     public void LoadAndShow()
     {
         var GridLayoutPrefabPath = "GridLayout Show";
@@ -146,6 +141,36 @@ public class ResLoader : MonoBehaviour
         onProgress.Invoke(1);
         ShowShowButton(true);
         Log("load assetbundle cost " + (stopWatch.ElapsedMilliseconds / 1000f).ToString() + "s");
+    }
+
+    IEnumerator LoadAssetBundleAsync_LoadFromFile(string path, string abname, System.Action<GameObject> callback)
+    {
+
+        ShowShowButton(false);
+        var stopWatch = Stopwatch.StartNew();
+        var assetBundleDir = Application.streamingAssetsPath;
+        var request = AssetBundle.LoadFromFileAsync(assetBundleDir + "/" + abname);
+        print("start load");
+        while (!request.isDone)
+        {
+            onProgress.Invoke(request.progress);
+            yield return null;
+        }
+        var assetBundleRequest = request.assetBundle.LoadAssetAsync<GameObject>(path);
+        while (!assetBundleRequest.isDone)
+        {
+            onProgress.Invoke(assetBundleRequest.progress);
+            print(assetBundleRequest.progress);
+            yield return null;
+        }
+        // print("load done "+(stopWatch.ElapsedMilliseconds / 1000f).ToString()+"s");
+        var prefab = assetBundleRequest.asset as GameObject;
+        var obj = Instantiate(prefab);
+        callback(obj);
+
+        onProgress.Invoke(1);
+        ShowShowButton(true);
+        Log("load done. assetbundle cost " + (stopWatch.ElapsedMilliseconds / 1000f).ToString() + "s");
     }
 
     public void ShowLoadedGameObject()
@@ -317,6 +342,20 @@ public class ResLoader : MonoBehaviour
         }));
     }
 
+    public void LoadABCompareTest_LoadFromFile()
+    {
+        StartCoroutine(LoadAssetBundleAsync_LoadFromFile("GridLayout Show", "gridlayout show.ab", obj =>
+        {
+            loadedGameObject = obj;
+            obj.transform.SetParent(canvasTransform);
+            obj.transform.localPosition = Vector3.zero;
+            obj.transform.localScale = Vector3.one;
+            obj.transform.localRotation = Quaternion.identity;
+            //去掉clone
+            obj.name = obj.name.Replace("(Clone)", "");
+        }));
+    }
+
     public void LoadTextureAsync()
     {
         StartCoroutine(_LoadTextureAsync());
@@ -358,5 +397,18 @@ public class ResLoader : MonoBehaviour
         onProgress.Invoke(1);
         var cost = stopWatch.ElapsedMilliseconds / 1000f;
         Log("load texture cost " + cost.ToString() + "s");
+    }
+
+    public void RefSmallResouce(){
+        var GridLayout = GameObject.Find("GridLayout");
+        var stopWatch = Stopwatch.StartNew();
+        var req = Resources.LoadAsync<Texture2D>("images/a small picture");
+        req.completed += r=>{
+            var obj = req.asset as Texture2D;
+            var image = new GameObject().AddComponent<Image>();
+            image.sprite = Sprite.Create(obj, new Rect(0, 0, obj.width, obj.height), Vector2.zero);
+            image.transform.SetParent(GridLayout.transform);
+            Log("load small resouce cost " + stopWatch.ElapsedMilliseconds / 1000f + "s");
+        };
     }
 }
